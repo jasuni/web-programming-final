@@ -36,10 +36,6 @@ const Questionaire = new mongoose.model("Questionaire", questionaireSchema);
 //upload questionaire
 router.post("/", validUser, async (req, res) => {
   // check parameters
-  if (!req.file)
-    return res.status(400).send({
-      message: "Must upload a file."
-    });
 
   const questionaire = new Questionaire({
     user: req.user,
