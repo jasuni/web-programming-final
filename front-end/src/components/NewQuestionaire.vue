@@ -12,6 +12,7 @@
       <div v-for="(question, index) in questions" :key="index">
         <fieldset>
           <textarea v-model="questions[index]" placeholder="Your Question here" />
+          <p><button type="button" @click="removeQuestion(index)">Remove</button></p>
         </fieldset>
       </div>
       <fieldset class="buttons">
@@ -61,6 +62,9 @@ export default {
     addQuestion() {
       this.questions.push('');
     }, //TODO add ability to remove questions
+    removeQuestion(index) {
+      this.questions.splice(index, 1);
+    }
   }
 }
 
