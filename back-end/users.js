@@ -122,8 +122,6 @@ router.post('/', async (req, res) => {
 
     // create a new user and save it to the database
     const user = new User({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
       username: req.body.username,
       password: req.body.password
     });
