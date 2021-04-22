@@ -61,7 +61,7 @@ router.get("/:username", validUser, async (req, res) => {
     //if(_id !== req.user.username) {
     //  res.status(400).send("username does not match the user"); // wrong username for this user
     //}
-    console.log("retrieving questionnaires for " + req.params.username);
+    //console.log("retrieving questionnaires for " + req.params.username);
     let qs = await Questionaire.find({
       user: req.user
     }).sort({
@@ -117,6 +117,17 @@ router.put("/:userID/:id", validUser, async (req, res) => {
     });
   } catch (error) {
     return res.sendStatus(500);
+  }
+});
+
+router.delete("/:userID/:id", validUser, async (req, res) => {
+  try {
+    await Questionaire.deleteOne({
+      _id: req.params.id
+    });
+    res.sendStatus(200);
+  } catch (error) {
+    res.sendStatus(500);
   }
 });
 
