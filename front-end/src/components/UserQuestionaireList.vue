@@ -4,7 +4,9 @@
   <div v-for="(questionaire, index) in questionaires" :key=index>
     <h2>{{ questionaire.title }}</h2>
     <p>{{ questionaire.description }}</p>
-    <button type="button" @click="showQuestionaire">Show Details</button>
+    <router-link :to="'/responses/' + questionaire._id">
+      <button type="button">Show Details</button>
+    </router-link>
   </div>
   <p v-if="error">{{error}}</p>
 
@@ -30,7 +32,7 @@ export default {
     async getUserQuestionaires() {
       try {
         let response = await axios.get('/api/questionaires/'+this.$root.$data.user.username);
-        console.log(response);
+        //console.log(response);
         this.questionaires = response.data;
       } catch (error) {
         this.error = "Error: " + error.response.data.message;
