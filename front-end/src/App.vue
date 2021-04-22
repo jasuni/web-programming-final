@@ -1,8 +1,9 @@
 <template>
   <div id="app">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <router-view/>
     <footer>
-      <p>About XX hours worked </p>
+      <p>About 11 hours worked </p>
       <p><a href="https://github.com/jasuni/web-programming-final">github repository</a></p>
     </footer>
   </div>

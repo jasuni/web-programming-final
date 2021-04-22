@@ -5,10 +5,10 @@
       <button @click="toggleQuestionaireCreation">Create New Questionaire</button>
       <new-questionaire :show="showInputForm" @close="close" @uploadFinished="finishCreation" />
     </div>
+    <button @click="toggleList">Switch List</button>
     <div class="questionaire-list" >
       <global-questionaire-list v-if="global"/>
       <user-questionaire-list v-else />
-      <button @click="toggleList">Switch</button>
     </div>
   </div>
 </template>
@@ -71,3 +71,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.menu {
+  margin-bottom: 24px;
+}
+</style>
