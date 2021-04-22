@@ -86,13 +86,35 @@ router.get("/", async (req, res) => {
 });
 
 //
-router.get("/:username/:id", validUser, async (req, res) => {
+router.get("/:userID/:id", validUser, async (req, res) => {
   try {
+    //console.log(req.params.username)
+    //console.log(req.params.id)
     let questionaire = await Questionaire.findOne({
       user: req.user,
       _id: req.params.id,
     });
     return res.send(questionaire);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
+});
+
+router.put("/:userID/:id", validUser, async (req, res) => {
+  try {
+    let questionaire = await Questionaire.findOne({
+      user: req.user,
+      _id: req.params.id,
+    });
+    console.log(req.body);
+    questionaire.title = req.body.title;
+    questionaire.description = req.body.description;
+    questionaire.questions = req.body.questions;
+    await questionaire.save();
+    return res.send({
+      questionaire: questionaire
+    });
   } catch (error) {
     return res.sendStatus(500);
   }
