@@ -5,17 +5,25 @@
       <button @click="toggleQuestionaireCreation">Create New Questionaire</button>
       <new-questionaire :show="showInputForm" @close="close" @uploadFinished="finishCreation" />
     </div>
-
+    <div class="questionaire-list" >
+      <global-questionaire-list v-if="global"/>
+      <user-questionaire-list v-else />
+      <button @click="toggleList">Switch</button>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import NewQuestionaire from '@/components/NewQuestionaire.vue';
+import UserQuestionaireList from '@/components/UserQuestionaireList.vue';
+import GlobalQuestionaireList from '@/components/GlobalQuestionaireList.vue';
 export default {
   name: 'Forms',
   components: {
     NewQuestionaire,
+    GlobalQuestionaireList,
+    UserQuestionaireList,
   },
   computed: {
     user() {
@@ -25,6 +33,7 @@ export default {
   data() {
     return {
       showInputForm: false,
+      global: false,
     }
   },
   methods: {
@@ -54,7 +63,10 @@ export default {
     },
     close() {
       this.showInputForm = false;
-    }
+    },
+    toggleList() {
+      this.global = !this.global;
+    },
 
   }
 }

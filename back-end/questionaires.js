@@ -36,7 +36,8 @@ const Questionaire = new mongoose.model("Questionaire", questionaireSchema);
 //upload questionaire
 router.post("/", validUser, async (req, res) => {
   // check parameters
-
+  //console.log("uploading: ");
+  //console.log(req.body);
   const questionaire = new Questionaire({
     user: req.user,
     //path: "/questionaires/" + req.file.filename,
@@ -53,9 +54,14 @@ router.post("/", validUser, async (req, res) => {
   }
 });
 
-router.get("/", validUser, async (req, res) => {
+router.get("/:username", validUser, async (req, res) => {
   //return questionaires
   try {
+    //console.log("about to retrieve questionnaires for user ");
+    //if(_id !== req.user.username) {
+    //  res.status(400).send("username does not match the user"); // wrong username for this user
+    //}
+    console.log("retrieving questionnaires for " + req.params.username);
     let qs = await Questionaire.find({
       user: req.user
     }).sort({
@@ -65,7 +71,32 @@ router.get("/", validUser, async (req, res) => {
   } catch (error) {
     return res.sendStatus(500);
   }
-})
+});
+
+router.get("/", async (req, res) => {
+  // return all questionaires
+  try {
+    let qs = await Questionaire.find().sort({
+      created: -1
+    }).populate('user');
+    return res.send(qs);
+  } catch (error) {
+    return res.sendStatus(500);
+  }
+});
+
+//
+router.get("/:username/:id", validUser, async (req, res) => {
+  try {
+    let questionaire = await Questionaire.findOne({
+      user: req.user,
+      _id: req.params.id,
+    });
+    return res.send(questionaire);
+  } catch (error) {
+    return res.sendStatus(500);
+  }
+});
 
 // TODO add answers to the questionaires, somehow - in another database, or in
 // the same Schema?

@@ -18,7 +18,7 @@
       <fieldset class="buttons">
         <button type="button" @click="addQuestion">Add Question</button>
         <button type="button" @click="close">Close</button>
-        <button type="submit" @click="upload">Upload</button>
+        <button type="submit" @click.prevent="upload">Upload</button>
       </fieldset>
     </form>
   </div>
@@ -46,11 +46,11 @@ export default {
     },
     async upload() {
       try {
-        const formData = new FormData();
-        formData.append('title', this.title);
-        formData.append('description', this.description);
-        formData.append('questions', this.questions)
-        await axios.post("/api/questionaires", formData);
+        await axios.post('/api/questionaires', {
+          title: this.title,
+          description: this.description,
+          questions: this.questions,
+        });
         this.title = '';
         this.description = '';
         this.questions = [''];
